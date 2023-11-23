@@ -13,8 +13,9 @@ module.exports = {
       async getOneUser(req, res) {
         try {
           const user = await User.findOne({ _id: req.params.userId })  //parameter in route :userId
-            .select('-__v');
-    
+            .select('-__v'); //do not include  "-"
+            
+
           if (!user) {
             return res.status(404).json({ message: 'User not found' });
           }
