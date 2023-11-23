@@ -40,7 +40,7 @@ module.exports = {
           .json({ message: 'Thought was creaated with unmatched user id.' });
       }
 
-      res.json('Successful thought created! 🎉');
+      res.status(201).json({ message: 'Thought created successfully!', thought });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -70,10 +70,8 @@ module.exports = {
   },
   async removeThought(req, res) {
     try {
-      const thought = await Thought.findOneAndUpdate(
+      const thought = await Thought.findOneAndRemove(
         { _id: req.params.thoughtId },
-        { $pull: { thought: { thoughtId: req.params.thoughtId } } },
-        { runValidators: true, new: true }
       );
 
       if (!thought) {
