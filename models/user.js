@@ -21,6 +21,13 @@ const { Schema, model } = require('mongoose'); //actiivity 28, 26
         type: String,
         unique: true,
         required: true,
+        validate: {
+            validator: function (value) {
+              // Mongoose basic email validation
+              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            },
+            message: props => `${props.value} is not a valid email address!`,
+          },
         // add validation as needed
       },
       friends: [
