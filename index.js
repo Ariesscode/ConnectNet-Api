@@ -11,6 +11,8 @@ const client = new MongoClient(connectionStringURI)
 app.use(express.json());
 
 
-app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`)
-});
+db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+    });
+  });
