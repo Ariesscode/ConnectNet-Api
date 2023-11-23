@@ -49,28 +49,35 @@ module.exports = {
           res.status(500).json(err);
         }
       },
-      async updateUser(req, res) {  //update user by their id with request body 
+      async updateUser(req, res) {
         console.log('You are updating a user.');
         console.log(req.body);
-    
+      
         try {
-          const user = await User.findOneAndUpdate(
-            { _id: req.params.userId },
-            { $set: { user: req.body } }, 
-            { runValidators: true, new: true }
-          );
-    
+          const updateData = { ...req.body };
+      
+          // Check if friends are provided in the request, and add them to the updateData
+          if (req.body.friends) {
+            updateData.$addToSet = { friends: { $each: req.body.friends } };
+            delete updateData.friends; // Remove friends from the main updateData
+          } 
+                const user = await User.findOneAndUpdate(
+                  { _id: req.params.userId },
+                  { $set: req.body },
+                  { runValidators: true, new: true }
+                );
+          
+      
           if (!user) {
-            return res
-              .status(404)
-              .json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'User not found.' });
           }
-    
+      
           res.json(user);
         } catch (err) {
           res.status(500).json(err);
         }
-      },
+      }
+      
       
     };
     
