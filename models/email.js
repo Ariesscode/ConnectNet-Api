@@ -7,7 +7,13 @@ const { Schema, model } = require('mongoose'); //actiivity 28, 26
         unique: true,
         required: true,
         maxlength: 50,
-        trim: true
+        trim: true,
+        thoughts: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'Thought',
+            },
+          ],
       },
       email: {
         type: String,
@@ -15,12 +21,6 @@ const { Schema, model } = require('mongoose'); //actiivity 28, 26
         required: true,
         // add validation as needed
       },
-      thoughts: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Thought',
-        },
-      ],
       friends: [
         {
           type: Schema.Types.ObjectId,
