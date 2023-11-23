@@ -1,3 +1,4 @@
-const name = require('./name');  //name of the different models to be exported out
+const User = require('./user');  //name of the different models to be exported out
+const Thought = require('./thought');  //name of the different models to be exported out, using file name 
 
-module.exports = { name }
+module.exports = { User, Thought }
