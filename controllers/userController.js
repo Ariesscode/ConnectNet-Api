@@ -35,7 +35,7 @@ module.exports = {
         }
       },
       // Delete a user and associated apps
-      async deleteUserById(req, res) {
+      async deleteUserById(req, res) { 
         try {
           const user = await User.findOneAndDelete({ _id: req.params.userId }); //find a user and delete that userId
     
@@ -49,14 +49,14 @@ module.exports = {
           res.status(500).json(err);
         }
       },
-      async updateUser(req, res) {
+      async updateUser(req, res) {  //update user by their id with request body 
         console.log('You are updating a user.');
         console.log(req.body);
     
         try {
           const user = await User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $addToSet: { user: req.body } },
+            { $set: { user: req.body } }, 
             { runValidators: true, new: true }
           );
     
