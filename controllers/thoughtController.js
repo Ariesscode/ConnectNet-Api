@@ -13,13 +13,13 @@ module.exports = {
   },
   async getOneThought(req, res) {
     try {
-      const post = await Thought.findOne({ _id: req.params.thoughtId }); //find thought by id parameter :thoughtId
+      const thought = await Thought.findOne({ _id: req.params.thoughtId }); //find thought by id parameter :thoughtId
 
-      if (!post) {
+      if (!thought) {
         return res.status(404).json({ message: 'No thought found.' });
       }
 
-      res.json(post);
+      res.json(thought);
     } catch (err) {
       res.status(500).json(err)
     }
