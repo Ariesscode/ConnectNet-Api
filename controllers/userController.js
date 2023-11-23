@@ -42,7 +42,7 @@ module.exports = {
           }
     
           await Thought.deleteMany({ _id: { $in: user.thoughts } });  //deletes thoughts from user model property thoughts
-          res.json({ message: 'User and associated apps deleted!' })
+          res.json({ message: 'User and associated thoughts deleted!' })
         } catch (err) {
           res.status(500).json(err);
         }
