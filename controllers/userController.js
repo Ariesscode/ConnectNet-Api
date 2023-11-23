@@ -13,7 +13,8 @@ module.exports = {
       async getOneUser(req, res) {
         try {
           const user = await User.findOne({ _id: req.params.userId })  //parameter in route :userId
-            .select('-__v'); //do not include  "-"
+            .select('-__v')
+            .populate('thoughts'); //do not include  "-"
             
 
           if (!user) {
@@ -44,6 +45,28 @@ module.exports = {
     
           await Thought.deleteMany({ _id: { $in: user.thoughts } });  //deletes thoughts from user model property thoughts
           res.json({ message: 'User and associated thoughts deleted!' })
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      },
+      async updateUser(req, res) {
+        console.log('You are updating a user.');
+        console.log(req.body);
+    
+        try {
+          const user = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $addToSet: { user: req.body } },
+            { runValidators: true, new: true }
+          );
+    
+          if (!user) {
+            return res
+              .status(404)
+              .json({ message: 'User not found.' });
+          }
+    
+          res.json(user);
         } catch (err) {
           res.status(500).json(err);
         }
