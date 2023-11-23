@@ -50,7 +50,7 @@ userSchema.virtual('friendCount').get(function () {
   });
   
 
-  const User = model('user', userSchema);
+  const User = model('user', userSchema); //use in template or use properties from User model use "use"
 
 module.exports = User;
 
