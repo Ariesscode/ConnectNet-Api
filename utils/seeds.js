@@ -46,3 +46,63 @@ const seedThoughts = [
         ],
       },
   ];
+
+
+  const userSeeds = [
+    {
+      username: 'Pokemon11',
+      email: 'pokemon11@email.com',
+      thoughts: [
+        'Thought here.', 
+      ],
+      friends: [
+        'chrisLui',
+        'Hannah34',
+      ],
+    },
+    {
+      username: 'Hannah34',
+      email: 'hannah34@email.com',
+      thoughts: [
+        'Another thought.', 
+      ],
+      friends: [
+        'Pokemon11',
+        'chrisLui',
+      ],
+    },
+    {
+      username: 'StanleyLewis',
+      email: 'stanley73@email.com',
+      thoughts: [
+        'Thought here.', 
+      ],
+      friends: [
+        'Jennifer1',
+      ],
+    },
+    {
+      username: 'chrisLui',
+      email: 'chrisLui95@email.com',
+      thoughts: [
+        'Im thinking right now of a thought.', 
+      ],
+      friends: [
+        'Pokemon11',
+        'Hannah34',
+        'Jennifer1',
+      ],
+    },
+    {
+      username: 'Jennifer1',
+      email: 'jennifer1@email.com',
+      thoughts: [
+        'This is a thought.', // Reference the thought directly using the thought's username
+      ],
+      friends: [
+        'StanleyLewis',
+        'chrisLui',
+      ],
+    },
+  ];
+  
