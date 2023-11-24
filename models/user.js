@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose'); //actiivity 28, 26
 
-const { Schema, model } = require('mongoose'); //actiivity 28, 26
+const { Schema, Types, model } = require('mongoose'); //actiivity 28, 26
+
 
 
     const userSchema = new Schema({

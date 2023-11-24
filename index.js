@@ -3,14 +3,16 @@ require('dotenv').config();
 const express = require('express');
 const { MongoClient } = require( 'mongodb');
 const db = require('./config/connection');
+const routes = require('./routes');
 
 const app = express();
-const port = process.env.PORT || 3001;
-const connectionStringURI = `mongodb://127.0.0.1:27017`;
-const client = new MongoClient(connectionStringURI)
+const PORT = process.env.PORT || 3001;
 
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+app.use(routes)
 
 
 db.once('open', () => {

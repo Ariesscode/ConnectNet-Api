@@ -1,12 +1,13 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 
-const uri = process.env.MONGODB_URI;
+const { connect, connection } = require('mongoose');
 
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error.message);
-  });
+const connectionString =
+  process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/connectdb';
+
+connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
+
+
+  module.exports = connection;
