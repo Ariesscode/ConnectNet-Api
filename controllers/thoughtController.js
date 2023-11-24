@@ -86,61 +86,7 @@ module.exports = {
     }
   },
 
-  async addFriend(req, res) {
-    try {
-      const { userId, friendId } = req.params;
-
-
-    const user = await User.findById(userId); //validation
-    const friend = await User.findById(friendId); //validation
-    if (!user || !friend) {
-      return res.status(404).json({ error: 'User or friend not found' });
-    }
-    // Check if the friendId is already in the user's friends list
-    if (user.friends.includes(friendId)) {
-      return res.status(400).json({ error: 'Friend already in the list' });
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $push: { friends: friendId } },
-      { new: true } // Return the updated document
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    res.json({ message: 'Friend added successfully', user: updatedUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
-},
- async deleteFriend(req, res) {
-  try {
-    const { userId, friendId } = req.params;
-    const user = await User.findById(userId); //validation
-    const friend = await User.findById(friendId); //validation
-    if (!user || !friend) {
-      return res.status(404).json({ error: 'User or friend not found' });
-    }
-
-    const updatedUser = await User.findOneAndRemove(
-      { _id: userId, friends: friendId },
-      { new: true } // Return the updated document
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'User or friend not found' });
-    }
-
-    res.json({ message: 'Friend removed successfully', user: updatedUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
-},
+ 
 async createReaction(req, res) {
   try {
     const newReaction = await Reaction.create(req.body.reaction);
@@ -179,7 +125,7 @@ async deleteReaction(req, res) {
       return res.status(404).json({ error: 'Thought cannot be found' });
     }
 
-    res.status(201).json({ message: 'Reaction was deleted from this thought id.', thought: updatedThought });
+    res.status(200).json({ message: 'Reaction was deleted from this thought id.', thought: updatedThought });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error', details: error.message });

@@ -28,7 +28,7 @@ const { Schema, model } = require('mongoose'); //actiivity 28, 26
             },
             message: props => `${props.value} is not a valid email address!`,
           },
-        // add validation as needed
+        // validation 
       },
       friends: [
         {
