@@ -97,7 +97,7 @@ const seedThoughts = [
       username: 'Jennifer1',
       email: 'jennifer1@email.com',
       thoughts: [
-        'This is a thought.', // Reference the thought directly using the thought's username
+        'This is a thought.', 
       ],
       friends: [
         'StanleyLewis',
