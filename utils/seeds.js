@@ -106,3 +106,27 @@ const seedThoughts = [
     },
   ];
   
+  async function seedDatabase() {
+    try {
+      // Remove existing data
+      await Thought.deleteMany();
+      await User.deleteMany();
+  
+      const createdThoughts = await Thought.insertMany(seedThoughts);
+  
+      await User.insertMany(userSeeds.map((user, index) => ({
+        ...user,
+        thoughts: user.thoughts.map((thoughtId, thoughtIndex) => createdThoughts[thoughtIndex + index * seedThoughts.length]._id),
+      })));
+  
+      console.log('Database seeded!');
+    } catch (error) {
+      console.error('Error seeding database:', error);
+    } finally {
+        if (mongoose.connection.readyState === 1) { //only disconnect if connection is open
+            await mongoose.disconnect();
+    }
+  }
+}
+  
+  seedDatabase();
