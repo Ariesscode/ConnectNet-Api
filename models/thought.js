@@ -1,6 +1,7 @@
 
 const { Schema, Types, model } = require('mongoose');
 const reactionSchema = require('./reaction.js');
+
 const thoughtSchema = new Schema(
 {
     thoughtId: {
@@ -38,7 +39,7 @@ thoughtSchema.virtual('formatDate').get(function () {
     return this.createdAt.toLocaleString(); // readable date for users 
   });
 
-const Thought = model('Thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
 

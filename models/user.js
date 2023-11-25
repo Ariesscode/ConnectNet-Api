@@ -1,5 +1,4 @@
-
-const { Schema, Types, model } = require('mongoose'); //actiivity 28, 26
+const { Schema, model } = require('mongoose'); //actiivity 28, 26
 
 
 
@@ -48,8 +47,12 @@ const { Schema, Types, model } = require('mongoose'); //actiivity 28, 26
 userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
   });
-  
 
+  userSchema.virtual('thoughtCount').get(function () {
+    return this.thoughts.length;
+  });
+
+  
   const User = model('user', userSchema); //use in template or use properties from User model use "use"
 
 module.exports = User;

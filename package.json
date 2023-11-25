@@ -16,7 +16,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "ariesscode"
+    "url": "https://github.com/ariesscode/ConnectNet-Api"
   },
   "keywords": [
     "node",
