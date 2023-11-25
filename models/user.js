@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose'); //actiivity 28, 26
+const mongoose = require('mongoose');
+const { Schema, Types, model } = require('mongoose'); //actiivity 28, 26
 
 
 
@@ -9,12 +10,6 @@ const { Schema, model } = require('mongoose'); //actiivity 28, 26
         required: true,
         maxlength: 50,
         trim: true,
-        thoughts: [
-            {
-              type: Schema.Types.ObjectId,
-              ref: 'Thought',
-            },
-          ],
       },
       email: {
         type: String,
@@ -37,10 +32,18 @@ const { Schema, model } = require('mongoose'); //actiivity 28, 26
       ],
     },
     {
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought',
+      },
+    ],
+  },
+    {
       toJSON: {
         virtuals: true,
       },
-      id: false,
+      id: true,
     },
 );
 

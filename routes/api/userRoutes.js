@@ -17,7 +17,7 @@ router.route('/').get(getAllUsers).post(createUser);  //get all users and create
 
 // /api/users/:userId
 router.route('/:userId').get(getOneUser).delete(deleteUserById); //get and delete user 
-router.route('/:userId/update/').put(updateUser);   //update a user
+router.route('/:userId/update').put(updateUser);   //update a user
 router.route('/:userId/friends/:friendId')
   .put(addFriend)
   .delete(deleteFriend);

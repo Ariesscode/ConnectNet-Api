@@ -4,7 +4,7 @@ const { User, Thought } = require('../models');
 module.exports = {
     async getAllUsers(req, res) {
         try {
-          const users = await User.find();
+          const users = await User.find().populate('thoughts'); 
           res.json(users);
         } catch (err) {
           res.status(500).json(err);
@@ -12,7 +12,7 @@ module.exports = {
       },
       async getOneUser(req, res) {
         try {
-          const user = await User.findOne({ _id: req.params.userId })
+          const user = await User.findOne({ _id: req.params.userId }).populate('thoughts');
           // .populate('thoughts');
           res.json(user);
         } catch (err) {
@@ -58,34 +58,50 @@ module.exports = {
           res.status(500).json(err);
         }
       },
+      // async updateUser(req, res) {
+      //   try {
+      //   const user = await User.findOneAndUpdate(
+      //     { _id: req.params.userId },
+      //     { $set: req.body },
+      //     { runValidators: true, new: true }
+      //   );
+    
+      //     res.json(user);
+      //   } catch (err) {
+      //     res.status(500).json(err);
+      //   }
+      // },
+      
       async updateUser(req, res) {
-        console.log('You are updating a user.');
-        console.log(req.body);
-      
         try {
-          const updateData = { ...req.body };
+          const allowedFields = ['username', 'email'];
+          const updates = {};
       
-          // Check if friends are provided in the request, and add them to the updateData
-          if (req.body.friends) {
-            updateData.$addToSet = { friends: { $each: req.body.friends } };
-            delete updateData.friends; // Remove friends from the main updateData
-          } 
-                const user = await User.findOneAndUpdate(
-                  { _id: req.params.userId },
-                  { $set: req.body },
-                  { runValidators: true, new: true }
-                );
-          
+          for (const field of allowedFields) {
+            if (req.body[field] !== undefined) {
+              updates[field] = req.body[field];
+            }
+          }
+      
+          const user = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $set: updates },
+            { runValidators: true, new: true }
+          );
       
           if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ error: 'User not found' });
           }
       
           res.json(user);
         } catch (err) {
+          if (err.name === 'ValidationError') {
+            return res.status(422).json({ error: err.message });
+          }
           res.status(500).json(err);
         }
       },
+      
       async addFriend(req, res) {
         try {
           const { userId, friendId } = req.params;
