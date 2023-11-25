@@ -93,7 +93,8 @@ module.exports = {
             return res.status(404).json({ error: 'User not found' });
           }
       
-          res.json(user,{ message: 'User was updated!' });
+          res.status(200).json({ user, message: 'User was updated!' });
+
         } catch (err) {
           if (err.name === 'ValidationError') {
             return res.status(422).json({ error: err.message });
@@ -136,19 +137,18 @@ module.exports = {
       async deleteFriend(req, res) {
         try {
           const { userId, friendId } = req.params;
-          const user = await User.findById(userId); //validation
-          const friend = await User.findById(friendId); //validation
-          if (!user || !friend) {
-            return res.status(404).json({ error: 'User or friend not found' });
-          }
-      
-          const updatedUser = await User.findOneAndRemove(
-            { _id: userId, friends: friendId },
-            { new: true } // Return the updated document
+
+          const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { friends: friendId } },
+            { new: true }
           );
       
           if (!updatedUser) {
             return res.status(404).json({ error: 'User or friend not found' });
+          }
+          if (!updatedUser.friends.includes(friendId)) {
+            return res.status(404).json({ error: 'Friend not found in user\'s friend list' });
           }
       
           res.json({ message: 'Friend removed successfully', user: updatedUser });
