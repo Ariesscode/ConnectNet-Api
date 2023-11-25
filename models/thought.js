@@ -3,11 +3,8 @@ const { Schema, Types, model } = require('mongoose');
 const reactionSchema = require('./reaction.js');
 
 const thoughtSchema = new Schema(
-{
-    thoughtId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId(),
-      },
+
+  {
     text: {
       type: String,
       required: true,

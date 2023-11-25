@@ -51,9 +51,17 @@ module.exports = {
     console.log(req.body);
 
     try {
+      const allowedFields = ['text'];
+      const updates = {};
+  
+      for (const field of allowedFields) {
+        if (req.body[field] !== undefined) {
+          updates[field] = req.body[field];
+        }
+      }
       const user = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $set: { thoughts: req.body } }, //set is used to update
+        { $set: updates }, //set is used to update
         { runValidators: true, new: true }
       );
 
@@ -63,15 +71,17 @@ module.exports = {
           .json({ message: 'Thought not found.' });
       }
 
-      res.json(user);
+      res.json({user, message: 'Thought updated!'});
     } catch (err) {
       res.status(500).json(err);
     }
   },
   async removeThought(req, res) {
     try {
+      
       const thought = await Thought.findOneAndRemove(
         { _id: req.params.thoughtId },
+        { new: true }
       );
 
       if (!thought) {
@@ -80,7 +90,7 @@ module.exports = {
           .json({ message: 'No thought found with that ID :(' });
       }
 
-      res.json(thought);
+      res.json({thought, message: 'Thought deleted!' });
     } catch (err) {
       res.status(500).json(err);
     }

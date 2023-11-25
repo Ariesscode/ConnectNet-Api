@@ -157,6 +157,31 @@ module.exports = {
           res.status(500).json({ error: 'Server error' });
         }
       },
+      async createThought(req, res) {
+        try {
+          const { userId } = req.params;
+          const { text } = req.body;
+      
+          const user = await User.findById(userId);
+          if (!user) {
+            return res.status(404).json({ error: 'Check user id, not found.' });
+          }
+      
+          const thought = await Thought.create({
+            text,
+            username: user.username, 
+          });
+      
+          user.thoughts.push(thought);
+          await user.save();
+      
+          res.status(201).json(thought);
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Server error' });
+        }
+      }
+      
       
     };
     

@@ -14,6 +14,9 @@ router.route('/').get(getThoughts).post(createThought);  //routes will use the n
   //api/thoughts/:thoughtId
 router.route('/:thoughtId').get(getOneThought).delete(removeThought); //accepts thought id parameter in url
 router.route('/:thoughtId/update').put(updateThought);
-router.route('/:thoughtId/reactions').post(createReaction);
-router.route('/:thoughtId/reactions').delete(deleteReaction);
+router.route('/:thoughtId/reactions')
+  .post(createReaction)
+  .delete(deleteReaction);
+
+
 module.exports = router;

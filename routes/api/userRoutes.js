@@ -9,6 +9,7 @@ const {
   updateUser,
   addFriend,
   deleteFriend,
+  createThought,
   
 } = require('../../controllers/userController'); //require the names in 
 
@@ -21,6 +22,6 @@ router.route('/:userId/update').put(updateUser);   //update a user
 router.route('/:userId/friends/:friendId')
   .put(addFriend)
   .delete(deleteFriend);
-
+router.route('/:userId/thoughts').post(createThought);
 
 module.exports = router;
