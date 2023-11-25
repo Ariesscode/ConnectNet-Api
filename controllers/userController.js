@@ -4,7 +4,7 @@ const { User, Thought } = require('../models');
 module.exports = {
     async getAllUsers(req, res) {
         try {
-          const users = await User.find().populate('thoughts'); 
+          const users = await User.find();
           res.json(users);
         } catch (err) {
           res.status(500).json(err);
@@ -12,7 +12,7 @@ module.exports = {
       },
       async getOneUser(req, res) {
         try {
-          const user = await User.findOne({ _id: req.params.userId }).populate('thoughts');
+          const user = await User.findOne({ _id: req.params.userId })
           // .populate('thoughts');
           res.json(user);
         } catch (err) {
@@ -93,7 +93,7 @@ module.exports = {
             return res.status(404).json({ error: 'User not found' });
           }
       
-          res.json(user);
+          res.json(user,{ message: 'User was updated!' });
         } catch (err) {
           if (err.name === 'ValidationError') {
             return res.status(422).json({ error: err.message });
