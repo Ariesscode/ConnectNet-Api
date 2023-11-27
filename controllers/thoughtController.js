@@ -60,7 +60,7 @@ module.exports = {
   async removeThought(req, res) {
     try {
       
-      const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
+      const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });  //deletes the thought by thought id in url param
 
       if (!thought) {
         return res
@@ -79,7 +79,7 @@ module.exports = {
 
       const updatedThought = await Thought.findOneAndUpdate(  //find thought id to push reaction to 
         { _id: req.params.thoughtId },
-        { $push: { reactions: req.body } },
+        { $push: { reactions: req.body } }, //push the json body request of new reaction and username 
         { runValidators: true, new: true } // Return the updated thought
       );
   
@@ -97,8 +97,8 @@ async deleteReaction(req, res) {
   try {
 
     const updatedThought = await Thought.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $pull: { reactions: { reactions: req.params._id } } },
+      { _id: req.params.thoughtId }, //find the thought id using the params in url
+      { $pull: { reactions: { reactions: req.params._id } } }, //pull reaction id from reactions property array
       { runValidators: true, new: true }
       // Return the updated thought
     );
