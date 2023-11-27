@@ -60,8 +60,7 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ![Alt text](<Assets/Screenshot (328).png>)
 ![Alt text](<Assets/Screenshot (330).png>)
 
-![Alt text](<Assets/Screenshot (322).png>)
-
+![Alt text](<Assets/Screenshot (327).png>)
 The following animations show examples of the application's API routes being tested in Insomnia.
 
 The following animation shows GET routes to return all users and all thoughts being tested in Insomnia:
