@@ -20,31 +20,19 @@ Mongo Database: <br>
 
 **user routes:**  
 
-/api/users <br>
-router.route('/').get(getAllUsers).post(createUser)  FIND ALL USERS OR CREATE A USER <br>
-/api/users/:userId <br>
-router.route('/:userId').get(getOneUser).delete(deleteUserById) FIND ONE USER OR DELETE A USER <br>
-/api/users/:userId/update <br>
-router.route('/:userId/update').put(updateUser) UPDATE A USER BY USER ID <br>
-/api/users/:userId/friends/:friendId <br>
-router.route('/:userId/friends/:friendId') ADD A FRIEND OR DELETE USING FRIEND ID TO THE USER USING USER ID <br>
-  .put(addFriend) <br>
-  .delete(deleteFriend) <br>
-/api/users/:userId/thoughts <br>
-router.route('/:userId/thoughts').post(createThought) CREATE A THOUGHT BY USING USER ID <br>
+/api/users  FIND ALL USERS (GET REQUEST) OR CREATE A USER (POST REQUEST) <br>
+/api/users/:userId FIND ONE USER (GET REQUEST) OR DELETE A USER (DELETE REQUEST)  <br>
+/api/users/:userId/update UPDATE A USER BY USER ID (PUT REQUEST) <br>
+/api/users/:userId/friends/:friendId ADD A FRIEND OR DELETE USING FRIEND ID TO THE USER USING USER ID (PUT REQUEST OR DELETE REQUEST) <br>
+ /api/users/:userId/thoughts CREATE A THOUGHT BY USING USER ID (POST REQUEST) <br>
 
 **thought routes:**
 
-/api/thoughts <br>
-router.route('/').get(getThoughts) GET ALL THOUGHTS FROM ALL USERS <br>
-/api/thoughts/:thoughtId  GET A SINGLE THOUGHT BY THOUGHT ID <br>
-router.route('/:thoughtId').get(getOneThought).delete(removeThought) <br>
-/api/thoughts/:thoughtid/update UPDATE A THOUGHT BY THOUGHT ID  <br>
-router.route('/:thoughtId/update').put(updateThought) <br>
-/api/thoughts/:thoughtId/reactions CREATE A REACTION ON A SPECIFIC THOUGHT ID <br>
-router.route('/:thoughtId/reactions').post(createReaction) <br>
-/api/thoughts/:thoughtId/reactions/:reactionId  DELETE A REACTION ON A SPECIFIC THOUGHT ID <br>
-router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction) <br>
+/api/thoughts GET ALL THOUGHTS FROM ALL USERS (GET REQUEST) <br>
+/api/thoughts/:thoughtId  GET A SINGLE THOUGHT BY THOUGHT ID (GET REQUEST OR DELETE REQUEST) <br>
+/api/thoughts/:thoughtid/update UPDATE A THOUGHT BY THOUGHT ID (PUT REQUEST) <br>
+/api/thoughts/:thoughtId/reactions CREATE A REACTION ON A SPECIFIC THOUGHT ID (POST REQUEST) <br>
+/api/thoughts/:thoughtId/reactions/:reactionId  DELETE A REACTION ON A SPECIFIC THOUGHT ID (DELETE REQUEST) <br>
 
 ## User Story
 
