@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema, Types } = require('mongoose');
+const { Schema, Types } = mongoose;
 
 const reactionSchema = new Schema(
   {
@@ -35,5 +35,5 @@ reactionSchema.virtual('formatDate').get(function () {
   });
 
 
+  module.exports = reactionSchema;
 
-module.exports = reactionSchema;

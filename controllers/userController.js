@@ -19,22 +19,7 @@ module.exports = {
           res.status(500).json(err);
         }
       },
-      // async getOneUser(req, res) {
-      //   try {
-      //     const user = await User.findOne({ _id: req.params.userId })  //parameter in route :userId
-      //       .select('-__v')
-      //       .populate('thoughts'); //do not include  "-"
-            
-
-      //     if (!user) {
-      //       return res.status(404).json({ message: 'User not found' });
-      //     }
-    
-      //     res.json(user);
-      //   } catch (err) {
-      //     res.status(500).json(err);
-      //   }
-      // },
+     
       async createUser(req, res) {
         try {
           const user = await User.create(req.body);
@@ -58,19 +43,6 @@ module.exports = {
           res.status(500).json(err);
         }
       },
-      // async updateUser(req, res) {
-      //   try {
-      //   const user = await User.findOneAndUpdate(
-      //     { _id: req.params.userId },
-      //     { $set: req.body },
-      //     { runValidators: true, new: true }
-      //   );
-    
-      //     res.json(user);
-      //   } catch (err) {
-      //     res.status(500).json(err);
-      //   }
-      // },
       
       async updateUser(req, res) {
         try {
