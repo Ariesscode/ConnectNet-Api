@@ -1,14 +1,50 @@
-# 18 NoSQL: Social Network API
+# 18 NoSQL: ConnectNet-Api
 
 ## Your Task
 
-MongoDB is a popular choice for many social networks due to its speed with large amounts of data and flexibility with unstructured data. Over the last part of this course, you’ll use several of the technologies that social networking platforms use in their full-stack applications. Because the foundation of these applications is data, it’s important that you understand how to build and structure the API first.
+**Walkthrough video of Mongo Compass database /Insomnia test routes :**
 
-Your Challenge is to build an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. You’ll use Express.js for routing, a MongoDB database, and the Mongoose ODM. In addition to using the [Express.js](https://www.npmjs.com/package/express) and [Mongoose](https://www.npmjs.com/package/mongoose) packages, you may also optionally use a JavaScript date library of your choice or the native JavaScript `Date` object to format timestamps.
+ConnectNet api is a social api for users to be able to share their thoughts and reactions with their friends. This is not a deployed app, but a built api that can be used to create a fully developed app by using the data stored in a database. The database used for this api is Mongo Compass [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb). This database is used commonly because of its known flexibility and ability to store large amounts of data. This api is using express [Express.js](https://www.npmjs.com/package/express) for routing and the Mongoose package to create models for each directory in this api. There are two models used to build the users and thoughts that would be created by the user. Each thought consist of the text or body of the request, username, the date in which the thought was created and reactions if any. Additionally, the thoughts will include the reaction count in the api request, if any were to exist. Reactions will show the username, the date the reaction was made and a default id for each reaction. Routes are tested in insomnia to guarantee a well structured api. Here is the provided link, https://insomnia.rest/download. In this api, there is pre-set seeds needed to run the routes for this api. First, you will need to download all the dependencies listed here: 
+<br> or run "npm i" to install all listed: <br>
+"dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.1",
+    "nodemon": "^3.0.1"
 
-No seed data is provided, so you’ll need to create your own data using Insomnia after you’ve created your API.
+Mongo Database: <br>
+  "You will a database such as mongoDB to store the preset seeds to test routes. After you have installed the mongoDB. Log into your mongodb using "mongosh" to confirm you have your database installed. Exit out of the mongodb and run this command in the terminal, "npm run seeds", this will store the seeds data into the mongo database. Check your database for added collections, there should be two collections made, thoughts and users." 
 
-Because this application won’t be deployed, you’ll also need to create a walkthrough video that demonstrates its functionality and all of the following acceptance criteria being met. You’ll need to submit a link to the video and add it to the README of your project.
+"Insomnia is used to test api's and test routing, you will need to install the above link. All routes are configured in the routes folder for users and thoughts. Here are some routes to try: "
+
+**To start api, run "npm start" in terminal, once you see the message that PORT is listening on PORT 3001, you are set to go!**
+
+**user routes:**  
+
+/api/users <br>
+router.route('/').get(getAllUsers).post(createUser)  FIND ALL USERS OR CREATE A USER <br>
+/api/users/:userId <br>
+router.route('/:userId').get(getOneUser).delete(deleteUserById) FIND ONE USER OR DELETE A USER <br>
+/api/users/:userId/update <br>
+router.route('/:userId/update').put(updateUser) UPDATE A USER BY USER ID <br>
+/api/users/:userId/friends/:friendId <br>
+router.route('/:userId/friends/:friendId') ADD A FRIEND OR DELETE USING FRIEND ID TO THE USER USING USER ID <br>
+  .put(addFriend) <br>
+  .delete(deleteFriend) <br>
+/api/users/:userId/thoughts <br>
+router.route('/:userId/thoughts').post(createThought) CREATE A THOUGHT BY USING USER ID <br>
+
+**thought routes:**
+
+/api/thoughts <br>
+router.route('/').get(getThoughts) GET ALL THOUGHTS FROM ALL USERS <br>
+/api/thoughts/:thoughtId  GET A SINGLE THOUGHT BY THOUGHT ID <br>
+router.route('/:thoughtId').get(getOneThought).delete(removeThought) <br>
+/api/thoughts/:thoughtid/update UPDATE A THOUGHT BY THOUGHT ID  <br>
+router.route('/:thoughtId/update').put(updateThought) <br>
+/api/thoughts/:thoughtId/reactions CREATE A REACTION ON A SPECIFIC THOUGHT ID <br>
+router.route('/:thoughtId/reactions').post(createReaction) <br>
+/api/thoughts/:thoughtId/reactions/:reactionId  DELETE A REACTION ON A SPECIFIC THOUGHT ID <br>
+router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction) <br>
 
 ## User Story
 
@@ -54,229 +90,3 @@ The following animation shows the POST and DELETE routes for a user’s friend l
 
 ![Demo that shows the POST and DELETE routes for a user’s friend list being tested in Insomnia.](./Assets/18-nosql-homework-demo-04.gif)
 
-In addition to this, your walkthrough video should show the POST and DELETE routes for reactions to thoughts being tested in Insomnia.
-
-## Getting Started
-
-Be sure to have MongoDB installed on your machine. Follow the [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb) to install MongoDB locally.
-
-Use the following guidelines to set up your models and API routes:
-
-### Models
-
-**User**:
-
-* `username`
-  * String
-  * Unique
-  * Required
-  * Trimmed
-
-* `email`
-  * String
-  * Required
-  * Unique
-  * Must match a valid email address (look into Mongoose's matching validation)
-
-* `thoughts`
-  * Array of `_id` values referencing the `Thought` model
-
-* `friends`
-  * Array of `_id` values referencing the `User` model (self-reference)
-
-**Schema Settings**:
-
-Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query.
-
----
-
-**Thought**:
-
-* `thoughtText`
-  * String
-  * Required
-  * Must be between 1 and 280 characters
-
-* `createdAt`
-  * Date
-  * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
-
-* `username` (The user that created this thought)
-  * String
-  * Required
-
-* `reactions` (These are like replies)
-  * Array of nested documents created with the `reactionSchema`
-
-**Schema Settings**:
-
-Create a virtual called `reactionCount` that retrieves the length of the thought's `reactions` array field on query.
-
----
-
-**Reaction** (SCHEMA ONLY)
-
-* `reactionId`
-  * Use Mongoose's ObjectId data type
-  * Default value is set to a new ObjectId
-
-* `reactionBody`
-  * String
-  * Required
-  * 280 character maximum
-
-* `username`
-  * String
-  * Required
-
-* `createdAt`
-  * Date
-  * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
-
-**Schema Settings**:
-
-This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
-
-### API Routes
-
-**`/api/users`**
-
-* `GET` all users
-
-* `GET` a single user by its `_id` and populated thought and friend data
-
-* `POST` a new user:
-
-```json
-// example data
-{
-  "username": "lernantino",
-  "email": "lernantino@gmail.com"
-}
-```
-
-* `PUT` to update a user by its `_id`
-
-* `DELETE` to remove user by its `_id`
-
-**BONUS**: Remove a user's associated thoughts when deleted.
-
----
-
-**`/api/users/:userId/friends/:friendId`**
-
-* `POST` to add a new friend to a user's friend list
-
-* `DELETE` to remove a friend from a user's friend list
-
----
-
-**`/api/thoughts`**
-
-* `GET` to get all thoughts
-
-* `GET` to get a single thought by its `_id`
-
-* `POST` to create a new thought (don't forget to push the created thought's `_id` to the associated user's `thoughts` array field)
-
-```json
-// example data
-{
-  "thoughtText": "Here's a cool thought...",
-  "username": "lernantino",
-  "userId": "5edff358a0fcb779aa7b118b"
-}
-```
-
-* `PUT` to update a thought by its `_id`
-
-* `DELETE` to remove a thought by its `_id`
-
----
-
-**`/api/thoughts/:thoughtId/reactions`**
-
-* `POST` to create a reaction stored in a single thought's `reactions` array field
-
-* `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
-
-## Grading Requirements
-
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
-
-This Challenge is graded based on the following criteria:
-
-### Deliverables: 10%
-
-* Your GitHub repository containing your application code.
-
-### Walkthrough Video: 37%
-
-* A walkthrough video that demonstrates the functionality of the social media API must be submitted, and a link to the video should be included in your README file.
-
-  * The walkthrough video must show all of the technical acceptance criteria being met.
-
-  * The walkthrough video must demonstrate how to start the application’s server.
-
-  * The walkthrough video must demonstrate GET routes for all users and all thoughts being tested in Insomnia.
-
-  * The walkthrough video must demonstrate GET routes for a single user and a single thought being tested in Insomnia.
-
-  * The walkthrough video must demonstrate POST, PUT, and DELETE routes for users and thoughts being tested in Insomnia.
-
-  * Walkthrough video must demonstrate POST and DELETE routes for a user’s friend list being tested in Insomnia.
-
-  * Walkthrough video must demonstrate POST and DELETE routes for reactions to thoughts being tested in Insomnia.
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the preceding acceptance criteria plus the following:
-
-  * Uses the [Mongoose package](https://www.npmjs.com/package/mongoose) to connect to a MongoDB database.
-
-  * Includes User and Thought models outlined in the Challenge instructions.
-
-  * Includes schema settings for User and Thought models as outlined in the Challenge instructions.
-
-  * Includes Reactions as the `reaction` field's subdocument schema in the Thought model.
-
-  * Uses functionality to format queried timestamps properly.
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains a high-quality README with description and a link to a walkthrough video.
-
-### Bonus: +10 Points
-
-Fulfilling the following can add up to 10 points to your grade. Note that the highest grade you can achieve is still 100:
-
-* Application deletes a user's associated thoughts when the user is deleted.
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* A walkthrough video demonstrating the functionality of the application and all of the acceptance criteria being met.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
----
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
