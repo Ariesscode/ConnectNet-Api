@@ -57,6 +57,10 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ```
 
 ## Mock Up
+![Alt text](<Assets/Screenshot (328).png>)
+![Alt text](<Assets/Screenshot (330).png>)
+
+![Alt text](<Assets/Screenshot (322).png>)
 
 The following animations show examples of the application's API routes being tested in Insomnia.
 
