@@ -5,6 +5,8 @@
 **Walkthrough video of Mongo Compass database /Insomnia test routes :**
 https://drive.google.com/file/d/1B2AHvueNR9f9Oi1xx4Mo3BOTrAREsPWq/view
 
+Github: https://github.com/Ariesscode/ConnectNet-Api
+
 ConnectNet api is a social api for users to be able to share their thoughts and reactions with their friends. This is not a deployed app, but a built api that can be used to create a fully developed app by using the data stored in a database. The database used for this api is Mongo Compass [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb). This database is used commonly because of its known flexibility and ability to store large amounts of data. This api is using express [Express.js](https://www.npmjs.com/package/express) for routing and the Mongoose package to create models for each directory in this api. There are two models used to build the users and thoughts that would be created by the user. Each thought consist of the text or body of the request, username, the date in which the thought was created and reactions if any. Additionally, the thoughts will include the reaction count in the api request, if any were to exist. Reactions will show the username, the date the reaction was made and a default id for each reaction. Routes are tested in insomnia to guarantee a well structured api. Here is the provided link, https://insomnia.rest/download. In this api, there is pre-set seeds needed to run the routes for this api. First, you will need to download all the dependencies listed here: 
 <br> or run "npm i" to install all listed: <br>
 "dotenv": "^16.3.1",
